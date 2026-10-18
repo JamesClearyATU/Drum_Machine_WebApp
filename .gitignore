@@ -1,0 +1,10 @@
+
+# Compiled Java files
+/bin/
+*.class
+
+# Maven build output (if used later)
+/target/
+
+# Temporary files
+*.log
