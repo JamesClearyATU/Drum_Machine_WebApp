@@ -1,4 +1,4 @@
-package main.java.com.drummachine;
+package com.drummachine;
 
 import javax.swing.*;
 import java.awt.*;
