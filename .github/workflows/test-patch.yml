@@ -1,0 +1,30 @@
+
+name: Run Maven tests on patch
+
+on:
+  push:
+    branches: [patch]
+  pull_request:
+    branches: [patch]
+
+permissions:
+  contents: read
+
+jobs:
+  test-patch:
+    name: Test patch branch
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Java
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Run Maven tests
+        run: mvn test
