@@ -1,0 +1,28 @@
+
+name: Run specific Maven test method
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test-method:
+    name: Run testPadName
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Java
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Run testPadName method
+        run: mvn test "-Dtest=DrumPadTest#testPadName"
