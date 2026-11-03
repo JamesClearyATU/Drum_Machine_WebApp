@@ -1,0 +1,31 @@
+
+name: Build and package Drum Machine App
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build-package:
+    name: Maven package build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Set up Java
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Build and package application
+        run: mvn package
+
+      - name: Verify JAR file was created
+        run: ls -lh target/*.jar
