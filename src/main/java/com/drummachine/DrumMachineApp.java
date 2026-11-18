@@ -9,6 +9,7 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -21,9 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
-/**
- * A Java Swing drum machine with six playable sound pads.
- */
+/** A Java Swing drum machine with six playable sound pads. */
 public class DrumMachineApp {
   private static final Logger LOGGER = Logger.getLogger(DrumMachineApp.class.getName());
 
