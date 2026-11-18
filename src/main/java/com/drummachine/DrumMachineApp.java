@@ -3,6 +3,12 @@ package com.drummachine;
 import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.io.IOException;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -19,13 +25,15 @@ import javax.swing.SwingUtilities;
 
 public class DrumMachineApp 
 {
+    private static final Logger LOGGER =
+        Logger.getLogger(DrumMachineApp.class.getName());
 
 private static void playSound(String fileName) {
     try {
         var soundURL = DrumMachineApp.class.getResource("/sounds/" + fileName);
 
-        if (soundURL == null) {
-            System.err.println("Sound not found: " + fileName);
+       if (soundURL == null) {
+            LOGGER.warning("Sound not found: " + fileName);
             return;
         }
 
@@ -45,12 +53,29 @@ private static void playSound(String fileName) {
         }
 
     } catch (Exception e) {
-        System.err.println("Error playing sound: " + fileName);
-        e.printStackTrace();
+    LOGGER.log(Level.SEVERE, "Error playing sound: " + fileName, e);
     }
 }
 
      public static void main(String[] args) {
+
+        LOGGER.setLevel(Level.FINE);
+
+    ConsoleHandler consoleHandler = new ConsoleHandler();
+    consoleHandler.setLevel(Level.FINE);
+
+    LOGGER.setUseParentHandlers(false);
+    LOGGER.addHandler(consoleHandler);
+
+try {
+    FileHandler fileHandler = new FileHandler("drum-machine.log", true);
+    fileHandler.setLevel(Level.FINE);
+    fileHandler.setFormatter(new SimpleFormatter());
+
+    LOGGER.addHandler(fileHandler);
+} catch (IOException e) {
+    LOGGER.log(Level.WARNING, "Could not create log file", e);
+}
 
         SwingUtilities.invokeLater(() -> {
 
@@ -81,11 +106,16 @@ private static void playSound(String fileName) {
               
 
             
-            padButton.addActionListener(e -> {
-                String soundFile = padName.toLowerCase().replace("-", "") + ".wav";
-                playSound(soundFile);
-                lastSoundLabel.setText("Last Sound: " + padName);
-            });
+           
+padButton.addActionListener(e -> {
+    String soundFile = padName.toLowerCase().replace("-", "") + ".wav";
+
+    LOGGER.fine("Drum pad played: " + padName);
+
+    playSound(soundFile);
+    lastSoundLabel.setText("Last Sound: " + padName);
+});
+
 
 
 
@@ -103,6 +133,7 @@ private static void playSound(String fileName) {
             // Show the window
             frame.setLocationRelativeTo(null);
             frame.setVisible(true);
+            LOGGER.info("Drum Machine App started successfully");
         });
     }
 }
