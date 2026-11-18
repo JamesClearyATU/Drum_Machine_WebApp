@@ -7,5 +7,10 @@
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
         "lib/**/*.jar"
-    ]
+    ],
+    "java.checkstyle.configuration": "/google_checks.xml",
+    "[java]": {
+        "editor.defaultFormatter": "wx-chevalier.google-java-format"
+    },
+    "java.format.settings.google.style": "google"
 }
