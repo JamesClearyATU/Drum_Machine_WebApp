@@ -8,3 +8,19 @@
 
 # Temporary files
 *.log
+
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Private keys and certificates
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Sensitive configuration
+secrets/
+credentials.json
