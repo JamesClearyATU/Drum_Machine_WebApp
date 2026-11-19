@@ -1,0 +1,32 @@
+name: Java Super-Linter
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+  statuses: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  java-lint:
+    name: Check Java formatting
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Run Super-Linter
+        uses: super-linter/super-linter/slim@v9.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_GOOGLE_JAVA_FORMAT: "true"
+          VALIDATE_ALL_CODEBASE: "true"
+          FILTER_REGEX_INCLUDE: '.*src/.*\.java$'
